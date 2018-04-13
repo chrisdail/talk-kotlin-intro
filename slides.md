@@ -15,12 +15,13 @@ template: heading
 ![:scale 20%](images/Kotlin-logo.svg)
 
 # val kotlin: Introduction
+Slides - [github.com/chrisdail/talk-kotlin-intro](https://github.com/chrisdail/talk-kotlin-intro)
 
 Chris Dail - [@chrisdail](http://twitter.com/chrisdail)
 
 Senior Director, Software Engineering
 
-![:scale 20%](images/Akiri-logo.png)
+![:scale 20%](images/Akiri-Logo.png)
 
 ---
 
