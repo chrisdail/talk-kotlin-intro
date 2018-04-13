@@ -14,7 +14,7 @@ template: heading
 
 ![:scale 20%](images/Kotlin-logo.svg)
 
-# Kotlin Myths and Introduction
+# val kotlin: Introduction
 
 Chris Dail - [@chrisdail](http://twitter.com/chrisdail)
 
@@ -452,11 +452,11 @@ class Derived(p: Int) : Base(p)
 - Basic declaration
 ```kotlin
 class Address {
-    var name: String = ...
-    var street: String = ...
-    var city: String = ...
-    var state: String? = ...
-    var zip: String = ...
+        var name: String = ""
+        var street: String = ""
+        var city: String = ""
+        var state: String? = null
+        var zip: String = ""
 }
 ```
 
@@ -490,15 +490,15 @@ UserService.createUser("charlie")
 
 ```kotlin
 class SomeClass() {
-        val id: Int
+    val id: Int
 
-        init {
-            id = nextId++
-        }
+    init {
+        id = nextId++
+    }
 
-        companion object {
-            private var nextId = 1
-        }
+    companion object {
+        private var nextId = 1
+    }
 }
 ```
 
@@ -525,8 +525,8 @@ data class User(var name: String, var age: Int)
 - Extension Functions
 ```kotlin
 fun <T> HttpResponse<T>.successful() = when (statusCode()) {
-    in 200..299 -> true
-    else -> false
+        in 200..299 -> true
+        else -> false
 }
 ```
 - Extension Properties

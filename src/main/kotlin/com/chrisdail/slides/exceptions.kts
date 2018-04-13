@@ -1,6 +1,5 @@
 package com.chrisdail.slides
 
-
 val value = "123"
 val a: Int? = try {
     value.toInt()
