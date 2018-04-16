@@ -168,6 +168,7 @@ println(listOf(2.0).map(::areaOfSquare).first())
 
 template: heading
 
+![:scale 50%](images/basics.jpg)
 # Basics
 
 ---
@@ -293,6 +294,8 @@ println("Making Local call to $prefix-$suffix")
 ---
 
 template: heading
+
+![:scale 50%](images/control-flow.jpg)
 # Control Flow
 
 ---
@@ -396,6 +399,8 @@ for (n in 1..100) {
 ---
 
 template: heading
+
+![:scale 50%](images/functions.jpg)
 # Functions
 
 ---
@@ -469,6 +474,8 @@ println(eval(2, 1, diff))
 ---
 
 template: heading
+
+![:scale 50%](images/classes.jpg)
 # Classes
 
 ---
@@ -598,6 +605,8 @@ println("racecar".palindrome)
 ---
 
 template: heading
+
+![:scale 50%](images/scope.png)
 # Scoping Functions
 
 ---
@@ -649,6 +658,8 @@ val address = Address().apply {
 ---
 
 template: heading
+
+![:scale 50%](images/marbles.jpg)
 # Collections
 
 ---
