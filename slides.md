@@ -25,11 +25,55 @@ Senior Director, Software Engineering
 
 ---
 
-# What is Kotlin
+template: heading
+# Kotlin
+
+---
+
+template: heading
+# Fastest Growing Programming Language
+
+---
+
+template: heading
+# PYPL - [pypl.github.io](pypl.github.io/)
+
+![:scale 58%](images/pypl.png)
+
+---
+
+template: heading
+# StackOverflow
+
+![:scale 90%](images/kotlin-so.png)
+
+---
+
+template: heading
+# But Why?
+
+---
+
+template: heading
+# Google IO 2017
+
+![:scale 60%](images/google-io.png)
+
+---
+
+# Why Kotlin?
+
+From The Authors:
+
+> "We want to become more productive by switching to a more expressive language. At the same time, we cannot accept compromises in terms of either Java interoperability or compilation speed." - JetBrains Blog
+
+---
+
+# Kotlin Is
 
 - General purpose programming language
-- Open Source
-- Static Typed
+- Open Source (Apache 2)
+- Statically Typed
 - Concise, safe, pragmatic
 - Interoperable
 
@@ -43,9 +87,10 @@ Misconceptions about the language
 
 ---
 
-template: inverse
+template: heading
 
-# Kotlin is Android’s answer to Swift
+![:scale 70%](images/ios-vs-android.png)
+# Kotlin is Google's answer to Apple's Swift
 
 --
 
@@ -55,6 +100,9 @@ Android support was only announced in 2017
 
 ---
 
+template: heading
+
+![:scale 80%](images/kotlin-vs-swift.png)
 # Kotlin is a Swift Clone
 
 --
@@ -63,6 +111,9 @@ Swift started in 2010 but Apple only announced it in 2014
 
 ---
 
+template: heading
+
+![:scale 20%](images/java.png)
 # Kotlin is only for Java Developers
 
 --
@@ -72,6 +123,8 @@ Kotlin is a modern, pragmatic language with excellent interop
 Initially meant JVM but now extends to JavaScript and Native
 
 ---
+
+template: heading
 
 # Kotlin offers little over Java 8/9
 
@@ -115,7 +168,7 @@ println(listOf(2.0).map(::areaOfSquare).first())
 
 template: heading
 
-# Types
+# Basics
 
 ---
 
@@ -141,28 +194,6 @@ var message = "Hello World!"
 
 ```kotlin
 val message = "Hello World Forever!"
-```
-
----
-
-# Destructuring
-
-- Assigning multiple values
-
-```kotlin
-val (last, first) = "Bond, James".split(", ")
-println("$last. $first $last.")
-
-// Bond. James Bond.
-```
-
-- `_` - Unused Parameter
-
-```kotlin
-val (_, prefix, suffix) = "506-555-1212".split("-")
-println("Making Local call to $prefix-$suffix")
-
-// Making Local call to 555-1212
 ```
 
 ---
@@ -238,6 +269,28 @@ val name = map["name"] ?: throw IllegalArgumentException()
 
 ---
 
+# Destructuring
+
+- Assigning multiple values
+
+```kotlin
+val (last, first) = "Bond, James".split(", ")
+println("$last. $first $last.")
+
+// Bond. James Bond.
+```
+
+- `_` - Unused Parameter
+
+```kotlin
+val (_, prefix, suffix) = "506-555-1212".split("-")
+println("Making Local call to $prefix-$suffix")
+
+// Making Local call to 555-1212
+```
+
+---
+
 template: heading
 # Control Flow
 
@@ -291,14 +344,15 @@ when {
 
 # When
 
+- Also an expression
 - Smart Casts
 
 ```kotlin
-when (x) {
-    is Int -> print(x + 1)
-    is String -> print(x.length + 1)
-    is IntArray -> print(x.sum())
-}
+println(when (x) {
+    is Int -> x + 1
+    is String -> x.length + 1
+    is IntArray -> x.sum()
+})
 ```
 
 ---
@@ -308,7 +362,7 @@ when (x) {
 - Loop over list
 
 ```kotlin
-for (value: Int in ints) {
+for (value in ints) {
     println(value)
 }
 ```
@@ -391,7 +445,7 @@ addUser("Charlie", province = "NS", city = "Halifax")
 
 ---
 
-# Lambdas
+# Lambdas / Closures
 
 - Last line is the returned value
 ```kotlin
@@ -522,7 +576,6 @@ data class User(var name: String, var age: Int)
 # Extension 
 
 - Adding to existing classes
-- No 'magic' here. Imported like any other function
 - Extension Functions
 ```kotlin
 fun <T> HttpResponse<T>.successful() = when (statusCode()) {
@@ -537,6 +590,7 @@ val String.palindrome: Boolean
 println("racecar".palindrome)
 // true
 ```
+- No 'magic' here. Imported like any other function
 
 ---
 
@@ -599,7 +653,7 @@ template: heading
 # Lists and Sets
 
 ```kotlin
-val emptyList = emptyList<String>()
+val empty = emptyList<String>()
 val list = listOf(1, 1, 2, 3)
 val mutableList = mutableListOf<String>()
 mutableList.add("hello")
@@ -671,12 +725,33 @@ val name = person.name ?: throw IllegalArgumentException("Name")
 
 ---
 
+template: heading
 # And Lots More ...
 
-- Coroutines
+---
+
+# Advanced Topics
+
 - Inline functions
 - Generics, Covariance, Reified
 - Type Safe Builders
 - Lazy initialization
 - Operator overloading
 - Java Interop: Platform Types
+- Kotlin.js
+
+---
+
+template: heading
+![dog](images/no-idea-dog.jpg)
+
+# Coroutines
+
+---
+
+template: heading
+# Demo - Java to Kotlin
+
+Example using Open Source project: Floodlight
+
+Conversion tooling (IntelliJ)

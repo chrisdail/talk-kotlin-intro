@@ -1,6 +1,6 @@
 package com.chrisdail.slides
 
-val emptyList = emptyList<String>()
+val empty = emptyList<String>()
 val list = listOf(1, 1, 2, 3)
 val mutableList = mutableListOf<String>()
 mutableList.add("hello")
