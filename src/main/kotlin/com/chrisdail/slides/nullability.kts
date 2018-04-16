@@ -5,6 +5,7 @@ var neverNull: String = "hi"
 var message: String? = "hi"
 message = null
 
+//message.length   // Compilation Error
 message?.length
 // Equivalent Java: (message == null) ? null : message.length
 

@@ -10,9 +10,11 @@ class Person(name: String) {
 
 class User(var name: String, var age: Int)
 
-open class Base(p: Int)
+open class Base(val p: Int)
 
-class Derived(p: Int) : Base(p)
+class Derived(p: Int) : Base(p) {
+    override fun toString() = "I have p = $p"
+}
 
 object UserService {
     fun createUser(name: String) {
@@ -45,8 +47,6 @@ fun main(args: Array<String>) {
     val user = User("Charlie", 20)
     println("Created user: ${user.name} age: ${user.age}")
     UserService.createUser("charlie")
-    println(2.add(2))
-    // 4
     println("racecar".palindrome)
     // true
 }

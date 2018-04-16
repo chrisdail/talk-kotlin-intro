@@ -239,6 +239,7 @@ message = null
 - `?.` - Null-safe calls
 
 ```kotlin
+//message.length   // Compilation Error
 message?.length
 // Equivalent Java: (message == null) ? null : message.length
 ```
@@ -263,7 +264,7 @@ val length = message?.length ?: -1
 - Can be combined with `throw` or `return`
 
 ```kotlin
-val map = mapOf("name" to "Chris")
+val map = mapOf("name" to "Ivy")
 val name = map["name"] ?: throw IllegalArgumentException()
 ```
 
@@ -385,8 +386,8 @@ for (i in 1..3) {
 for (n in 1..100) {
     println(when {
         n % 15 == 0 -> "FizzBuzz"
-        n % 5 == 0 -> "Fizz"
-        n % 3 == 0 -> "Buzz"
+        n % 3 == 0 -> "Fizz"
+        n % 5 == 0 -> "Buzz"
         else -> n
     })
 }
@@ -495,9 +496,11 @@ println("Created user: ${user.name} age: ${user.age}")
 # Inheritance
 
 ```kotlin
-open class Base(p: Int)
+open class Base(val p: Int)
 
-class Derived(p: Int) : Base(p)
+class Derived(p: Int) : Base(p) {
+    override fun toString() = "I have p = $p"
+}
 ```
 
 ---
@@ -564,7 +567,7 @@ class SomeClass() {
 - Easy way to create DTO / POJO
 - Adds some default functions based on the constructor:
     - `equals()` and `hashCode()` pair
-    - `toString()` of the form `User(name=John, age=42)`
+    - `toString()` of the form `User(name=Ivy, age=42)`
     - `copy()` function - Creates a copy of this class
 - Most data classes can be one liners
 ```kotlin
@@ -658,6 +661,9 @@ val list = listOf(1, 1, 2, 3)
 val mutableList = mutableListOf<String>()
 mutableList.add("hello")
 
+println(list[0])
+// 1
+
 println(list + listOf(5, 8))
 // [1, 1, 2, 3, 5, 8]
 
@@ -711,16 +717,17 @@ val minTtl = (sources + destinations).map { it.ttl }.min()
 - `try/catch` is an expression (can return a value)
 
 ```kotlin
-val a: Int? = try {
-    stringValue.toInt()
+val a: Int = try {
+    value.toInt()
 } catch (e: NumberFormatException) {
-    null
+    -1
 }
 ```
-- Combined with elvis
+
+--
 
 ```kotlin
-val name = person.name ?: throw IllegalArgumentException("Name")
+val b = value.toIntOrNull() ?: -1
 ```
 
 ---

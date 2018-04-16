@@ -5,6 +5,9 @@ val list = listOf(1, 1, 2, 3)
 val mutableList = mutableListOf<String>()
 mutableList.add("hello")
 
+println(list[0])
+// 1
+
 println(list + listOf(5, 8))
 // [1, 1, 2, 3, 5, 8]
 
