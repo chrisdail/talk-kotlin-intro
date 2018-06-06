@@ -1,6 +1,6 @@
 # val kotlin: Introduction
 
-This is a tech talk given at the Moncton User Group in April 2018.
+This is a tech talk given at the Moncton User Group in April 2018 (master branch). It was then revised and abridged for Maritime Devcon 2018 (maritime-devcon branch).
 
 # Overview
 

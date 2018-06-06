@@ -8,13 +8,29 @@ class Person(name: String) {
     }
 }
 
-class User(var name: String, var age: Int)
+data class User(var name: String, var age: Int)
 
-open class Base(val p: Int)
+fun test() {
+    val (name, age) = User("Ivy", 1)
+}
+
+
+interface Processor {
+    fun process()
+}
+
+open class Base(val p: Int) : Processor {
+    private val privateField = "cannot see me"
+
+    private fun privateFunction() = println(privateField)
+    override fun process() = println("Processed")
+    open fun allowsOverride() = println("Can Override")
+}
 
 class Derived(p: Int) : Base(p) {
-    override fun toString() = "I have p = $p"
+    override fun allowsOverride() = println(p)
 }
+
 
 object UserService {
     fun createUser(name: String) {

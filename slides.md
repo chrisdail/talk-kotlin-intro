@@ -77,6 +77,7 @@ From The Authors:
 - Statically Typed
 - Concise, safe, pragmatic
 - Interoperable
+- Object Oriented, Procedural, Functional
 
 ---
 
@@ -127,43 +128,13 @@ Initially meant JVM but now extends to JavaScript and Native
 
 template: heading
 
-# Kotlin offers little over Java 8/9
+# Kotlin offers little over Java 8/9/10
 
 --
 
-Steams and Lambdas a great but were only part of the issues
+Java has made some improvements recently but is still far from modern
 
 Don't take my word for it...
-
----
-
-layout: false
-
-# Kotlin Is...
-
-- Object Oriented
-
-```kotlin
-class Square(val length: Double) {
-    fun area() = length.pow(2)
-}
-println(Square(2.0).area())
-```
-
---
-- Procedural
-
-```kotlin
-fun areaOfSquare(length: Double) = length.pow(2)
-println(areaOfSquare(2.0))
-```
-
---
-- Functional
-
-```kotlin
-println(listOf(2.0).map(::areaOfSquare).first())
-```
 
 ---
 
@@ -178,6 +149,7 @@ layout: false
 
 # Creating Variables
 
+- name `:` type
 - Variables require initialization
 
 ```kotlin
@@ -210,17 +182,6 @@ println("Hello $planet")
 println("HELLO ${planet.toUpperCase()}")
 ```
 
-- Multiline
-
-```kotlin
-var multilineString = """
-    |{
-    |    "message": "test"
-    |}
-""".trimMargin()
-println(multilineString)
-```
-
 ---
 
 # Nulls
@@ -248,6 +209,34 @@ message?.length
 
 ---
 
+# Scoping Function: `let`
+
+```kotlin
+val person = lastName.let {
+    Person(it)
+}
+```
+- Takes the argument as a parameter (default: `it`)
+- Result is the last value (functional like a transform/map)
+--
+
+- More concise Null-checking
+
+```kotlin
+val username = usernameOrNull()
+if (username != null) {
+
+}
+```
+
+```kotlin
+usernameOrNull()?.let { username ->
+
+}
+```
+
+---
+
 template: heading
 ![](images/Elvis-Operator.png)
 
@@ -268,28 +257,6 @@ val length = message?.length ?: -1
 ```kotlin
 val map = mapOf("name" to "Ivy")
 val name = map["name"] ?: throw IllegalArgumentException()
-```
-
----
-
-# Destructuring
-
-- Assigning multiple values
-
-```kotlin
-val (last, first) = "Bond, James".split(", ")
-println("$last. $first $last.")
-
-// Bond. James Bond.
-```
-
-- `_` - Unused Parameter
-
-```kotlin
-val (_, prefix, suffix) = "506-555-1212".split("-")
-println("Making Local call to $prefix-$suffix")
-
-// Making Local call to 555-1212
 ```
 
 ---
@@ -344,20 +311,27 @@ when {
     else -> print("x is funny")
 }
 ```
-
 ---
 
-# When
+# Exceptions
 
-- Also an expression
-- Smart Casts
+- No checked exceptions
+    - Debated topic in the Java community (Spring)
+    - Leads to empty `try/catch` blocks
+- `try/catch` is an expression (can return a value)
 
 ```kotlin
-println(when (x) {
-    is Int -> x + 1
-    is String -> x.length + 1
-    is IntArray -> x.sum()
-})
+val a: Int = try {
+    value.toInt()
+} catch (e: NumberFormatException) {
+    -1
+}
+```
+
+--
+
+```kotlin
+val b = value.toIntOrNull() ?: -1
 ```
 
 ---
@@ -436,7 +410,7 @@ println(add(1, 1))
 - Default/Optional Arguments
 
 ```kotlin
-fun addUser(name: String, city: String = "Moncton", province: 
+fun addUser(name: String, city: String = "Moncton", province:
         String = "NB", country: String = "Canada") {
     // ...
 }
@@ -456,7 +430,7 @@ addUser("Charlie", province = "NS", city = "Halifax")
 
 - Last line is the returned value
 ```kotlin
-val sum = { x: Int, y: Int -> 
+val sum = { x: Int, y: Int ->
         x + y
 }
 ```
@@ -504,10 +478,20 @@ println("Created user: ${user.name} age: ${user.age}")
 # Inheritance
 
 ```kotlin
-open class Base(val p: Int)
+interface Processor {
+    fun process()
+}
+
+open class Base(val p: Int) : Processor {
+    private val privateField = "cannot see me"
+
+    private fun privateFunction() = println(privateField)
+    override fun process() = println("Processed")
+    open fun allowsOverride() = println("Can Override")
+}
 
 class Derived(p: Int) : Base(p) {
-    override fun toString() = "I have p = $p"
+    override fun allowsOverride() = println(p)
 }
 ```
 
@@ -530,6 +514,24 @@ class Address {
 ```kotlin
 val isEmpty: Boolean
         get() = this.size == 0
+```
+
+---
+
+# Data Classes
+
+- Easy way to create DTO / POJO
+- Most data classes can be one liners
+```kotlin
+data class User(var name: String, var age: Int)
+```
+- Adds some default functions based on the constructor:
+    - `equals()` and `hashCode()` pair
+    - `toString()` of the form `User(name=Ivy, age=42)`
+    - `copy()` function - Creates a copy of this class
+- Destructuring
+```kotlin
+val (name, age) = User("Ivy", 1)
 ```
 
 ---
@@ -570,91 +572,19 @@ class SomeClass() {
 
 ---
 
-# Data Classes
-
-- Easy way to create DTO / POJO
-- Adds some default functions based on the constructor:
-    - `equals()` and `hashCode()` pair
-    - `toString()` of the form `User(name=Ivy, age=42)`
-    - `copy()` function - Creates a copy of this class
-- Most data classes can be one liners
-```kotlin
-data class User(var name: String, var age: Int)
-```
-
----
-
-# Extension 
+# Extension
 
 - Adding to existing classes
 - Extension Functions
+
 ```kotlin
 fun <T> HttpResponse<T>.successful() = when (statusCode()) {
         in 200..299 -> true
         else -> false
 }
 ```
-- Extension Properties
-```kotlin
-val String.palindrome: Boolean
-        get() = this.reversed() == this
-println("racecar".palindrome)
-// true
-```
+
 - No 'magic' here. Imported like any other function
-
----
-
-template: heading
-
-![:scale 50%](images/scope.png)
-# Scoping Functions
-
----
-
-# `let`
-
-```kotlin
-val person = lastName?.let {
-    Person(it)
-}
-```
-- Takes the argument as a parameter (`it`)
-- Result is the last value
-- Can function like a transform
-- Often used for null-checking
-
----
-
-# `run`
-
-```kotlin
-"Hello World".run {
-    println(toUpperCase())
-    println(reversed())
-}
-// HELLO WORLD
-// dlroW olleH
-```
-- Receiver is the argument
-- Result is the last value
-- Executes a block in the scope
-
----
-
-# `apply`
-
-```kotlin
-val address = Address().apply {
-    line = "123 Fake Street"
-    city = "Moncton"
-    province = "NB"
-    country = "Canada"
-}
-```
-- Receiver is the argument
-- Result is the argument
-- Acts like a builder
 
 ---
 
@@ -702,7 +632,7 @@ mutableMap["hello"] = "world"
 
 - Great standard library for manipulating
 - `filter`, `map`, `find`, `fold`, `forEach`, `groupBy`, `min/max`, `reduce`, `sort`
-- Example: 
+- Example:
     - Find the minimum `ttl` value between both sources and destinations
 
 ```kotlin
@@ -721,29 +651,6 @@ val minTtl = (sources + destinations).map { it.ttl }.min()
 
 ---
 
-# Exceptions
-
-- No checked exceptions
-    - Debated topic in the community (Spring)
-    - Leads to empty `try/catch` blocks
-- `try/catch` is an expression (can return a value)
-
-```kotlin
-val a: Int = try {
-    value.toInt()
-} catch (e: NumberFormatException) {
-    -1
-}
-```
-
---
-
-```kotlin
-val b = value.toIntOrNull() ?: -1
-```
-
----
-
 template: heading
 # And Lots More ...
 
@@ -751,26 +658,150 @@ template: heading
 
 # Advanced Topics
 
+- Coroutines
 - Inline functions
 - Generics, Covariance, Reified
 - Type Safe Builders
 - Lazy initialization
 - Operator overloading
 - Java Interop: Platform Types
+- Scoping Functions: `let`, `run`, `apply`, `also`
 - Kotlin.js
 
 ---
 
 template: heading
-![dog](images/no-idea-dog.jpg)
-
-# Coroutines
-
----
-
-template: heading
-# Demo - Java to Kotlin
+# Java to Kotlin - By Example
 
 Example using Open Source project: Floodlight
 
 Conversion tooling (IntelliJ)
+
+---
+
+```java
+Collection<IFloodlightModule> mods = serviceMap.get(s);
+if (mods == null) {
+    mods = new ArrayList<IFloodlightModule>();
+    serviceMap.put(s, mods);
+}
+mods.add(m);
+int dupInConf = 0;
+for (IFloodlightModule cMod : mods) {
+    if (mList.contains(cMod.getClass().getCanonicalName()))
+        dupInConf += 1;
+}
+if (dupInConf > 1) {
+    StringBuilder sb = new StringBuilder();
+    for (IFloodlightModule mod : mods) {
+        sb.append(mod.getClass().getCanonicalName());
+        sb.append(", ");
+    }
+    String duplicateMods = sb.toString();
+    String mess = "ERROR! The configuration file " +
+            "specifies more than one module that " +
+            "provides the service " +
+            s.getCanonicalName() +
+            ". Please specify only ONE of the " +
+            "following modules in the config file: " +
+            duplicateMods;
+    throw new FloodlightModuleException(mess);
+}
+```
+
+---
+
+- Java
+
+```java
+Collection<IFloodlightModule> mods = serviceMap.get(s);
+if (mods == null) {
+    mods = new ArrayList<IFloodlightModule>();
+    serviceMap.put(s, mods);
+}
+mods.add(m);
+```
+
+- Kotlin
+
+```kotlin
+val mods = serviceMap.getOrPut(s) { mutableListOf() }
+mods.add(m)
+```
+
+---
+
+- Java
+
+```java
+int dupInConf = 0;
+for (IFloodlightModule cMod : mods) {
+    if (mList.contains(cMod.getClass().getCanonicalName()))
+        dupInConf += 1;
+}
+if (dupInConf > 1) {
+    //...
+}
+```
+
+- Kotlin
+
+```kotlin
+val intersection = mList.intersect(mods.map {
+    it.javaClass.canonicalName
+})
+if (intersection.isNotEmpty()) {
+    //...
+}
+```
+
+---
+
+- Java
+
+```java
+StringBuilder sb = new StringBuilder();
+for (IFloodlightModule mod : mods) {
+    sb.append(mod.getClass().getCanonicalName());
+    sb.append(", ");
+}
+String duplicateMods = sb.toString();
+String mess = "ERROR! The configuration file " +
+        "specifies more than one module that " +
+        "provides the service " +
+        s.getCanonicalName() +
+        ". Please specify only ONE of the " +
+        "following modules in the config file: " +
+        duplicateMods;
+throw new FloodlightModuleException(mess);
+```
+
+- Kotlin
+
+```kotlin
+throw FloodlightModuleException("""ERROR! The configuration file
+    |specifies more than one module that provides the service
+    |${s.canonicalName}. Please specify only ONE of the following
+    |modules in the config file: ${mods.joinToString(", ")}"""
+    .trimMargin())
+```
+
+---
+
+# Kotlin Result
+
+```kotlin
+val mods = serviceMap.getOrPut(s) { mutableListOf() }
+mods.add(m)
+
+val intersection = mList.intersect(mods.map {
+    it.javaClass.canonicalName
+})
+if (intersection.isNotEmpty()) {
+    throw FloodlightModuleException("""ERROR! The configuration file
+        |specifies more than one module that provides the service
+        |${s.canonicalName}. Please specify only ONE of the following
+        |modules in the config file: ${mods.joinToString(", ")}"""
+        .trimMargin())
+}
+```
