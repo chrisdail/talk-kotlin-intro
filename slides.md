@@ -711,7 +711,7 @@ if (dupInConf > 1) {
 
 ---
 
-- Java
+Java
 
 ```java
 Collection<IFloodlightModule> mods = serviceMap.get(s);
@@ -722,7 +722,7 @@ if (mods == null) {
 mods.add(m);
 ```
 
-- Kotlin
+Kotlin
 
 ```kotlin
 val mods = serviceMap.getOrPut(s) { mutableListOf() }
@@ -731,7 +731,7 @@ mods.add(m)
 
 ---
 
-- Java
+Java
 
 ```java
 int dupInConf = 0;
@@ -744,7 +744,7 @@ if (dupInConf > 1) {
 }
 ```
 
-- Kotlin
+Kotlin
 
 ```kotlin
 val intersection = mList.intersect(mods.map {
@@ -757,7 +757,7 @@ if (intersection.isNotEmpty()) {
 
 ---
 
-- Java
+Java
 
 ```java
 StringBuilder sb = new StringBuilder();
@@ -776,7 +776,7 @@ String mess = "ERROR! The configuration file " +
 throw new FloodlightModuleException(mess);
 ```
 
-- Kotlin
+Kotlin
 
 ```kotlin
 throw FloodlightModuleException("""ERROR! The configuration file
